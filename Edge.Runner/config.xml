@@ -79,5 +79,10 @@
     <StartScript>goodnight.lua</StartScript>
     <ZoneName></ZoneName>
   </Scene>
+  <Scene>
+    <Name>GoodMorning</Name>
+    <StartScript>goodmorning.lua</StartScript>
+    <ZoneName></ZoneName>
+  </Scene>
   
 </EdgeDataSet>

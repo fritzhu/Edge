@@ -145,7 +145,7 @@ namespace Edge.Runner
             var scene = (from s in dataSet.Scene where s.Name == sceneName select s).FirstOrDefault();
             if (scene == null) return;
 
-            log.Info("Activating scene {0}", sceneName);
+            log.Trace("Activating scene {0}", sceneName);
             if (!string.IsNullOrEmpty(scene.StartScript))
             {
                 try
@@ -157,6 +157,7 @@ namespace Edge.Runner
                     log.WarnException("Failed to execute start script for scene " + scene.Name, e);
                 }
             }
+            log.Info("Scene {0} activated", sceneName);
         }
 
         private static LuaObject LDefineRoom(LuaObject[] parms)
