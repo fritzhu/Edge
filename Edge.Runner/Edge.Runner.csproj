@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AluminumLua">
+      <HintPath>..\packages\AluminumLua.1.0.0.7\lib\net40\AluminumLua.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,11 +49,61 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripting\ScriptEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="fritz-pc.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Scripts\Scenes\goodmorning.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Scenes\evening.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Scenes\goodnight.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\lounge.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Edge.Data\Edge.Data.csproj">
+      <Project>{76e64f71-49d6-4484-92be-4549bfa3b9e4}</Project>
+      <Name>Edge.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Edge.Drivers.Clock\Edge.Drivers.Clock.csproj">
+      <Project>{8e3271e1-bd19-4812-9bbb-c8ee02486faa}</Project>
+      <Name>Edge.Drivers.Clock</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Edge.Drivers.WeMo\Edge.Drivers.WeMo.csproj">
+      <Project>{4f019d72-6b52-4bc1-9044-d9d8188c847d}</Project>
+      <Name>Edge.Drivers.WeMo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Edge.Drivers\Edge.Drivers.csproj">
+      <Project>{24aa3a77-afa1-4847-82a2-12fa3adbecb9}</Project>
+      <Name>Edge.Drivers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

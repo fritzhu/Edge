@@ -1,0 +1,83 @@
+<?xml version="1.0" standalone="yes"?>
+<EdgeDataSet xmlns="http://tempuri.org/EdgeDataSet.xsd">
+  <DriverFactory>
+    <TypeName>Edge.Drivers.Clock.ClockDriverFactory,Edge.Drivers.Clock</TypeName>
+    <FriendlyName>Clock</FriendlyName>
+  </DriverFactory>
+  <DriverFactory>
+    <TypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</TypeName>
+    <FriendlyName>WeMo Switch/Light Switch</FriendlyName>
+  </DriverFactory>
+
+  <Device>
+    <Name>Clock</Name>
+    <DriverTypeName>Edge.Drivers.Clock.ClockDriverFactory,Edge.Drivers.Clock</DriverTypeName>
+  </Device>
+  
+  <Device>
+    <Name>StairLights</Name>
+    <DriverTypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</DriverTypeName>
+  </Device>
+  <Device>
+    <Name>LoungeLights</Name>
+    <DriverTypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</DriverTypeName>
+  </Device>
+  <Device>
+    <Name>DiningLights</Name>
+    <DriverTypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</DriverTypeName>
+  </Device>
+  <Device>
+    <Name>UpstairsBathroomLights</Name>
+    <DriverTypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</DriverTypeName>
+  </Device>
+  <DeviceConfiguration>
+    <DeviceName>StairLights</DeviceName>
+    <PropertyName>IpAddress</PropertyName>
+    <PropertyValue>192.168.2.222</PropertyValue>
+  </DeviceConfiguration>
+  <DeviceConfiguration>
+    <DeviceName>LoungeLights</DeviceName>
+    <PropertyName>IpAddress</PropertyName>
+    <PropertyValue>192.168.2.207</PropertyValue>
+  </DeviceConfiguration>
+  <DeviceConfiguration>
+    <DeviceName>DiningLights</DeviceName>
+    <PropertyName>IpAddress</PropertyName>
+    <PropertyValue>192.168.2.203</PropertyValue>
+  </DeviceConfiguration>
+  <DeviceConfiguration>
+    <DeviceName>UpstairsBathroomLights</DeviceName>
+    <PropertyName>IpAddress</PropertyName>
+    <PropertyValue>192.168.2.205</PropertyValue>
+  </DeviceConfiguration>
+  <DeviceConfiguration>
+    <DeviceName>Clock</DeviceName>
+    <PropertyName>Latitude</PropertyName>
+    <PropertyValue>-36.8404</PropertyValue>
+  </DeviceConfiguration>
+  <DeviceConfiguration>
+    <DeviceName>Clock</DeviceName>
+    <PropertyName>Longitude</PropertyName>
+    <PropertyValue>174.7399</PropertyValue>
+  </DeviceConfiguration>
+  
+  
+  <Zone>
+    <Name>Lounge</Name>
+  </Zone>
+  <Zone>
+    <Name>Stairs</Name>
+  </Zone>
+
+  <Scene>
+    <Name>Evening</Name>
+    <StartScript>evening.lua</StartScript>
+    <ZoneName></ZoneName>
+  </Scene>
+  <Scene>
+    <Name>Goodnight</Name>
+    <StartScript>goodnight.lua</StartScript>
+    <ZoneName></ZoneName>
+  </Scene>
+  
+</EdgeDataSet>
