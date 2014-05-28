@@ -21,8 +21,8 @@ LoungeLights.State.OnChange(function(old, new)
 end)
 
 StairLights.State.OnChange(function(old, new) 
-	if (new == false) and (Clock.IsAfterBedtime.Get() == true) then
-		info('StairLights switched off after bedtime, opening scene Goodnight')
+	if (new == false) and (Clock.IsAfterSunset.Get() == true) then
+		info('StairLights switched off after sunset, opening scene Goodnight')
 		All.Goodnight()
 	end
 end)

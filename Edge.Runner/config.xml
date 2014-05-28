@@ -30,6 +30,10 @@
     <Name>UpstairsBathroomLights</Name>
     <DriverTypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</DriverTypeName>
   </Device>
+  <Device>
+    <Name>LoungeHeater</Name>
+    <DriverTypeName>Edge.Drivers.WeMo.WeMoDriverFactory,Edge.Drivers.WeMo</DriverTypeName>
+  </Device>
   <DeviceConfiguration>
     <DeviceName>StairLights</DeviceName>
     <PropertyName>IpAddress</PropertyName>
@@ -60,7 +64,11 @@
     <PropertyName>Longitude</PropertyName>
     <PropertyValue>174.7399</PropertyValue>
   </DeviceConfiguration>
-  
+  <DeviceConfiguration>
+    <DeviceName>LoungeHeater</DeviceName>
+    <PropertyName>IpAddress</PropertyName>
+    <PropertyValue>192.168.2.208</PropertyValue>
+  </DeviceConfiguration>
   
   <Zone>
     <Name>Lounge</Name>

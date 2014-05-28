@@ -48,14 +48,15 @@ namespace Edge.Drivers.Clock
             {
                 try
                 {
-                    var sh = SolarInfo.ForDate(latitude, longitude - 180, DateTime.Now.ToUniversalTime().Date);
+                    var sh = SolarInfo.ForDate(latitude, longitude, DateTime.Now.Date.ToUniversalTime());
 
                     var n = DateTime.Now.ToLocalTime();
-                    var sunset = sh.Sunset;
-                    var sunrise = sh.Sunrise;
-                    IsAfterSunset.Value = (n >= sunset);
+                    var sunset = sh.Sunset.ToLocalTime();
+                    var sunrise = sh.Sunrise.ToLocalTime();
                     IsAfterBedtime.Value = (n.Hour >= 20);
-                    IsBeforeSunrise.Value = (n <= sunrise);
+
+                    IsAfterSunset.Value = (n >= sunset || n < sunrise);
+                    IsBeforeSunrise.Value = (n.Hour <= 4 && n <= sunrise);
                 }
                 finally
                 {

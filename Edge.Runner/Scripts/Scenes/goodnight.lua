@@ -2,3 +2,4 @@
 LoungeLights.Switch(false)
 DiningLights.Switch(false)
 UpstairsBathroomLights.Switch(false)
+LoungeHeater.Switch(false)

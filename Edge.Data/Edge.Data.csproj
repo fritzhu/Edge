@@ -30,8 +30,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.25\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Designer, Version=1.0.92.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Externals\SQLite.Designer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SQLite, Version=1.0.92.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Externals\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.92.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Externals\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.92.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Externals\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,29 +66,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EdgeDataSet.cs">
-      <DependentUpon>EdgeDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="EdgeDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EdgeDataSet.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="EdgeDB.cs" />
+    <Compile Include="Model\Device.cs" />
+    <Compile Include="Model\DeviceConfiguration.cs" />
+    <Compile Include="Model\DriverFactory.cs" />
+    <Compile Include="Model\Scene.cs" />
+    <Compile Include="Model\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EdgeDataSet.xsc">
-      <DependentUpon>EdgeDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="EdgeDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>EdgeDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="EdgeDataSet.xss">
-      <DependentUpon>EdgeDataSet.xsd</DependentUpon>
-    </None>
+    <None Include="App.config" />
+    <None Include="Externals\System.Data.SQLite.dll.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Externals\SQLite.Designer.dll" />
+    <Content Include="Externals\SQLite.Designer.pdb" />
+    <Content Include="Externals\SQLite.Designer.xml" />
+    <Content Include="Externals\System.Data.SQLite.dll" />
+    <Content Include="Externals\System.Data.SQLite.EF6.dll" />
+    <Content Include="Externals\System.Data.SQLite.EF6.pdb" />
+    <Content Include="Externals\System.Data.SQLite.EF6.xml" />
+    <Content Include="Externals\System.Data.SQLite.Linq.dll" />
+    <Content Include="Externals\System.Data.SQLite.Linq.pdb" />
+    <Content Include="Externals\System.Data.SQLite.Linq.xml" />
+    <Content Include="Externals\System.Data.SQLite.pdb" />
+    <Content Include="Externals\System.Data.SQLite.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
