@@ -71,6 +71,7 @@
     <Compile Include="Model\DeviceConfiguration.cs" />
     <Compile Include="Model\DriverFactory.cs" />
     <Compile Include="Model\Scene.cs" />
+    <Compile Include="Model\SceneDirectControl.cs" />
     <Compile Include="Model\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

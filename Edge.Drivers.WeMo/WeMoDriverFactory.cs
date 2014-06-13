@@ -21,11 +21,11 @@ namespace Edge.Drivers.WeMo
             log.Trace("Initialized");
         }
 
-
         public IDeviceDriver Instantiate(string Identifier, Dictionary<string, string> configuration)
         {
             log.Trace("Instantiating WeMoDriver with IP address " + configuration["IpAddress"]);
             WeMoDriver driver = new WeMoDriver(Identifier, configuration["IpAddress"]);
+
             return driver;
         }
 

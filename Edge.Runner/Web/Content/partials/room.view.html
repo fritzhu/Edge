@@ -1,0 +1,15 @@
+﻿<div class="col-md-12">
+
+    <p class="col-md-12">
+        <ul class="nav nav-pills">
+            <li ng-repeat="scene in scenes" ng-class="{ active: scene.id === activeScene.id }"><a href="javascript:void(0)" ng-click="activateScene(scene)">{{scene.name}}</a></li>
+        </ul>
+    </p>
+    
+    <p class="container">
+        <div class="col-md-12">
+            <edge-device ng-repeat="device in activeScene.directControls" device-id="device.deviceId" device-name="device.deviceName" member-name="device.memberName"></edge-device>
+        </div>
+    </p>
+
+</div>

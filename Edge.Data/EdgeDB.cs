@@ -40,11 +40,19 @@ namespace Edge.Data
             }
         }
 
-        public static Scene GetScene(string sceneName)
+        public static Scene GetScene(int zoneId, string sceneName)
         {
             using (var conn = OpenConnection())
             {
-                return conn.Query<Scene>("select Id, ZoneId, Name, StartScript, StopScript from Scene where Name=@Name", new { Name = sceneName }).FirstOrDefault();
+                return conn.Query<Scene>("select Id, ZoneId, Name, StartScript, StopScript from Scene where Name=@Name and ZoneId=@ZoneId", new { Name = sceneName, ZoneId=zoneId }).FirstOrDefault();
+            }
+        }
+
+        public static Scene GetScene(int zoneId, int sceneId)
+        {
+            using (var conn = OpenConnection())
+            {
+                return conn.Query<Scene>("select Id, ZoneId, Name, StartScript, StopScript from Scene where Id=@Id and ZoneId=@ZoneId", new { Id = sceneId, ZoneId = zoneId }).FirstOrDefault();
             }
         }
 
@@ -88,6 +96,18 @@ namespace Edge.Data
             using (var conn = OpenConnection())
             {
                 return conn.Query<DriverFactory>("select Id, Name, TypeName from DriverFactory where Id = @Id", new { Id = id }).FirstOrDefault();
+            }
+        }
+
+        public static IEnumerable<SceneDirectControl> GetDirectControlsForScene(int sceneId)
+        {
+            using (var conn = OpenConnection())
+            {
+                return conn.Query<SceneDirectControl>(@"select s.DeviceId, d.Name as DeviceName, s.MemberName 
+from SceneDirectControl s 
+join Device d on d.Id = s.DeviceId 
+where s.SceneId = @SceneId",
+                           new { SceneId = sceneId });
             }
         }
     }

@@ -11,13 +11,34 @@ using System.Threading.Tasks;
 
 namespace Edge.Runner.Scripting
 {
-    public class ScriptEngine
+    public interface IScriptEngine
     {
-        private Logger log = LogManager.GetCurrentClassLogger();
+        void ExecuteSystemScripts();
+        void ExposeDevice(string name, IDeviceDriver device);
+        void ExposeZone(int id, string name, string[] scenes);
+        void ExecuteSceneScript(string file);
+    }
+
+    public class ScriptEngine : IScriptEngine
+    {
+        private static ScriptEngine instance = new ScriptEngine(new Logger(), SceneManager.Instance);
+        public static ScriptEngine Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        private ILogger log;
+        private ISceneManager sceneManager;
         private LuaContext context = new LuaContext();
 
-        public ScriptEngine()
+        private ScriptEngine(ILogger logger, ISceneManager sceneManager)
         {
+            this.log = logger;
+            this.sceneManager = sceneManager;
+
             context.AddBasicLibrary();
             context.AddIoLibrary();
 
@@ -127,7 +148,7 @@ namespace Edge.Runner.Scripting
             context.SetGlobal(name, dev);
         }
 
-        public void ExposeZone(string name, string[] scenes)
+        public void ExposeZone(int id, string name, string[] scenes)
         {
             log.Trace("Exposing zone {0} with {1} scenes", name, scenes.Count());
             Dictionary<LuaObject, LuaObject> table = new Dictionary<LuaObject, LuaObject>();
@@ -135,7 +156,7 @@ namespace Edge.Runner.Scripting
             foreach (string s in scenes)
             {
                 table.Add(s, new LuaFunction(parms => {
-                    Program.ActivateScene(this, s);
+                    sceneManager.ActivateScene(this, id, s);
                     return LuaObject.Nil;
                 }));
             }

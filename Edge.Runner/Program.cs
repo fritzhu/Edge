@@ -3,6 +3,8 @@ using Edge.Data;
 using Edge.Drivers;
 using Edge.Drivers.WeMo;
 using Edge.Runner.Scripting;
+using Nancy.Hosting.Self;
+using Ninject;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -14,16 +16,22 @@ using System.Threading.Tasks;
 
 namespace Edge.Runner
 {
-    class Program
+    public class Program
     {
         private static Dictionary<string, IDeviceDriverFactory> DriverFactories = new Dictionary<string, IDeviceDriverFactory>();
         private static Dictionary<string, IDeviceDriver> Devices = new Dictionary<string, IDeviceDriver>();
+        public static Dictionary<int, IDeviceDriver> DevicesById = new Dictionary<int, IDeviceDriver>();
 
-        static Logger log = LogManager.GetCurrentClassLogger();
+        static ILogger log;
 
         static void Main(string[] args)
         {
+            IKernel kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+
+            log = kernel.Get<ILogger>();
             log.Info("Main()");
+
             try
             {
                 foreach (var driver in EdgeDB.AllDriverFactories)
@@ -47,7 +55,7 @@ namespace Edge.Runner
                     }
                     catch (Exception e)
                     {
-                        log.WarnException(string.Format("Failed to load driver factory class {0}", driver.TypeName), e);
+                        log.Warn(string.Format("Failed to load driver factory class {0}", driver.TypeName), e);
                     }
                 }
 
@@ -60,7 +68,7 @@ namespace Edge.Runner
                     }
                     catch (Exception e)
                     {
-                        log.WarnException(string.Format("Failed to initialize driver factory class {0}", df.Key), e);
+                        log.Warn(string.Format("Failed to initialize driver factory class {0}", df.Key), e);
                     }
                 }
 
@@ -89,10 +97,11 @@ namespace Edge.Runner
                         var driver = DriverFactories[driverFactory.TypeName].Instantiate(device.Name, config);
 
                         Devices.Add(device.Name, driver);
+                        DevicesById.Add(device.Id, driver);
                     }
                     catch (Exception e)
                     {
-                        log.WarnException(string.Format("Failed to setup device {0}!", device.Name), e);
+                        log.Warn(string.Format("Failed to setup device {0}!", device.Name), e);
                     }
                 }
             }
@@ -104,10 +113,10 @@ namespace Edge.Runner
             log.Info("Config loaded");
             log.Info("Starting scripting engine");
             log.Trace("Starting Lua engine");
-            ScriptEngine engine = null;
+            IScriptEngine engine = null;
             try
             {
-                engine = new ScriptEngine();
+                engine = kernel.Get<IScriptEngine>();
 
                 foreach (var device in Devices)
                 {
@@ -117,47 +126,29 @@ namespace Edge.Runner
                 foreach (var zone in EdgeDB.AllZones)
                 {
                     var scenes = EdgeDB.GetScenesForZone(zone.Id).Select(x => x.Name).ToArray();
-                    engine.ExposeZone(zone.Name, scenes);
+                    engine.ExposeZone(zone.Id, zone.Name, scenes);
                 }
 
                 engine.ExecuteSystemScripts();
             }
             catch (Exception e)
             {
-                log.FatalException("Failed to start scripting engine!", e);
+                log.Fatal("Failed to start scripting engine!", e);
             }
 
-            log.Info("Ready");
+            log.Info("Starting NancyHost");
 
-            while (true)
+            HostConfiguration nancyConfig = new HostConfiguration();
+            nancyConfig.UrlReservations.CreateAutomatically = true;
+            nancyConfig.UnhandledExceptionCallback = e => log.Error(e.ToString());
+            using (var host = new NancyHost(nancyConfig, new Uri("http://localhost:8080")))
             {
+                host.Start();
+
+                log.Info("Ready");
                 Console.ReadKey();
-                ActivateScene(engine, "Evening");
-                Console.ReadKey();
-                ActivateScene(engine, "Goodnight");
             }
         }
 
-        public static void ActivateScene(ScriptEngine scriptEngine, string sceneName)
-        {
-            var scene = EdgeDB.GetScene(sceneName);
-            if (scene == null) return;
-
-            var zone = EdgeDB.GetZone(scene.ZoneId);
-
-            log.Trace("Activating scene {0} for zone {1}", sceneName, zone.Name);
-            if (!string.IsNullOrEmpty(scene.StartScript))
-            {
-                try
-                {
-                    scriptEngine.ExecuteSceneScript(scene.StartScript);
-                }
-                catch (Exception e)
-                {
-                    log.WarnException("Failed to execute start script for scene " + scene.Name, e);
-                }
-            }
-            log.Info("Activated scene {0} for zone {1}", sceneName, zone.Name);
-        }
     }
 }

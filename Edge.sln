@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edge.Drivers", "Edge.Driver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edge.Drivers.Clock", "Edge.Drivers.Clock\Edge.Drivers.Clock.csproj", "{8E3271E1-BD19-4812-9BBB-C8EE02486FAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edge.Runner.Tests", "Edge.Runner.Tests\Edge.Runner.Tests.csproj", "{8B216E7E-7C95-42C1-B238-5FE3EFDCD695}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8E3271E1-BD19-4812-9BBB-C8EE02486FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E3271E1-BD19-4812-9BBB-C8EE02486FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E3271E1-BD19-4812-9BBB-C8EE02486FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B216E7E-7C95-42C1-B238-5FE3EFDCD695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B216E7E-7C95-42C1-B238-5FE3EFDCD695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B216E7E-7C95-42C1-B238-5FE3EFDCD695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B216E7E-7C95-42C1-B238-5FE3EFDCD695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

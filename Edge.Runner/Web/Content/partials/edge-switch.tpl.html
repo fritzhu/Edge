@@ -1,0 +1,4 @@
+﻿<div class="btn-group">
+    <label class="btn" ng-class="{ 'btn-default': state === 'true', 'btn-warning': state === 'false' }" ng-model="state" ng-click="setState(false)" btn-radio="false" uncheckable>{{ offLabel }}</label>
+    <label class="btn" ng-class="{ 'btn-default': state === 'false', 'btn-success': state === 'true' }" ng-model="state" ng-click="setState(true)" btn-radio="true" uncheckable>{{ onLabel }}</label>
+</div>

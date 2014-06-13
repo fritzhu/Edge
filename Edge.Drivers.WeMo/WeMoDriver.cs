@@ -17,15 +17,11 @@ namespace Edge.Drivers.WeMo
         Timer timer;
 
         public DeviceProperty<bool> State { get; set; }
-
+        
         [DeviceAction]
         public void Switch(bool state)
         {
-            if (State.Value != state)
-            {
-                service.SetBinaryState(new WeMoServiceReference.SetBinaryState() { BinaryState = state ? "1" : "0" });
-                State.Value = state;
-            }
+            State.SetValue(state);
         }
         
         int port = 49153;
@@ -33,11 +29,11 @@ namespace Edge.Drivers.WeMo
 
         public WeMoDriver(string name, string IpAddress)
         {
-            timer = new Timer(new TimerCallback(timer_Elapsed));
-            State = new DeviceProperty<bool>(name, "State");
             this.ipAddress = IpAddress;
-            
             service = new WeMoServiceReference.BasicServicePortTypeClient(new BasicHttpBinding(), GetEndpointUrl());
+
+            timer = new Timer(new TimerCallback(timer_Elapsed));
+            State = new DeviceProperty<bool>(name, "State", newValue => service.SetBinaryState(new WeMoServiceReference.SetBinaryState() { BinaryState = newValue ? "1" : "0" }));
             
             timer.Change(1000, 1000);
         }
@@ -56,7 +52,7 @@ namespace Edge.Drivers.WeMo
                 try
                 {
                     var binaryState = service.GetBinaryState(new WeMoServiceReference.GetBinaryState());
-                    State.Value = (binaryState.BinaryState == "1");
+                    State.ValueWasChangedExternally(binaryState.BinaryState == "1");
                 }
                 catch (Exception e)
                 {
